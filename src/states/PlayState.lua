@@ -16,6 +16,8 @@
 
 PlayState = Class{__includes = BaseState}
 
+POWERUP_LAPSE = 5
+
 --[[
     We initialize what's in our PlayState via a state table that we pass between
     states as we go from playing to serving.
@@ -28,6 +30,9 @@ function PlayState:enter(params)
     self.highScores = params.highScores
     self.ball = params.ball
     self.level = params.level
+    self.powerUp = params.powerUp
+    -- assignment task
+    self.powerUpCounter = 0
 
     self.recoverPoints = 5000
 
@@ -37,6 +42,15 @@ function PlayState:enter(params)
 end
 
 function PlayState:update(dt)
+    -- we calculate if it's time for a powerup
+    self.powerUpCounter = self.powerUpCounter + dt
+
+    if self.powerUpCounter > POWERUP_LAPSE then 
+        self.powerUpCounter = self.powerUpCounter % POWERUP_LAPSE
+        self.powerUp.inPlay = true
+        self.powerUp.dy =  math.random(-200, 200)
+    end
+
     if self.paused then
         if love.keyboard.wasPressed('space') then
             self.paused = false
@@ -53,6 +67,7 @@ function PlayState:update(dt)
     -- update positions based on velocity
     self.paddle:update(dt)
     self.ball:update(dt)
+    self.powerUp:update(dt)
 
     if self.ball:collides(self.paddle) then
         -- raise ball above paddle in case it goes below it, then reverse dy
@@ -210,6 +225,7 @@ function PlayState:render()
 
     self.paddle:render()
     self.ball:render()
+    self.powerUp:render()
 
     renderScore(self.score)
     renderHealth(self.health)

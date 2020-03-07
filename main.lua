@@ -66,7 +66,8 @@ function love.load()
         ['paddles'] = GenerateQuadsPaddles(gTextures['main']),
         ['balls'] = GenerateQuadsBalls(gTextures['main']),
         ['bricks'] = GenerateQuadsBricks(gTextures['main']),
-        ['hearts'] = GenerateQuads(gTextures['hearts'], 10, 9)
+        ['hearts'] = GenerateQuads(gTextures['hearts'], 10, 9),
+        ['powerups'] = GenerateQuadsPowerUps(gTextures['main'])
     }
     
     -- initialize our virtual resolution, which will be rendered within our
@@ -130,6 +131,7 @@ function love.load()
     -- frame, to get around the fact that LÖVE's default callback won't let us
     -- test for input from within other functions
     love.keyboard.keysPressed = {}
+
 end
 
 --[[

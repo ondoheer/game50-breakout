@@ -58,6 +58,20 @@ function GenerateQuadsBricks(atlas)
     return table.slice(GenerateQuads(atlas, 32, 16), 1, 21)
 end
 
+function GenerateQuadsPowerUps(atlas)
+    local x = 0
+    local y = 192
+    
+    local quads = {}
+    
+    for i = 0, 9 do 
+        quads[i] = love.graphics.newQuad(x,y,16,16, atlas:getDimensions())
+        x = x + 16
+    end
+
+    return quads
+end
+
 --[[
     This function is specifically made to piece out the paddles from the
     sprite sheet. For this, we have to piece out the paddles a little more
