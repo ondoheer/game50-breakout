@@ -42,7 +42,6 @@ function ServeState:update(dt)
         gStateMachine:change('play', {
             paddle = self.paddle,
             bricks = self.bricks,
-            powerUp = PowerUp(),
             health = self.health,
             score = self.score,
             highScores = self.highScores,

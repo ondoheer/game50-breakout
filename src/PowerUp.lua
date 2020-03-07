@@ -13,10 +13,10 @@ PowerUp = Class{}
 
 function PowerUp:init()
 
-    self.width = 8
-    self.height = 8
-    self.x = VIRTUAL_WIDTH / 2 - 2
-    self.y = VIRTUAL_HEIGHT / 2 - 2
+    self.width = 16
+    self.height = 16
+    self.x = VIRTUAL_WIDTH / 2 - 16
+    self.y = VIRTUAL_HEIGHT / 5 - 16
     
     self.dx = 0
     self.dy = 0
@@ -45,10 +45,22 @@ function PowerUp:collides(target)
     return true
 end
 
+function PowerUp:hit()
+  self.inPlay = false
+  gSounds['select']:stop()
+  gSounds['select']:play()
+end
+
 function PowerUp:update(dt)
     if self.inPlay then 
         self.x = self.x + self.dx * dt
         self.y = self.y + self.dy * dt
+
+        if self.y > VIRTUAL_HEIGHT then
+            self.inPlay = false
+            self.x =  VIRTUAL_WIDTH / 2 - 16
+            self.y = VIRTUAL_HEIGHT / 5 - 16
+        end
     end
 
 end
